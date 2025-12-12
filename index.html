@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Links — Link Hub</title>
+  <style>
+    :root{
+      --bg:#f3eefe;
+      --panel:#ffffff;
+      --accent:#6b46ff;
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.7);
+      --radius:18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#e9f0ff 0%, #efebff 60%);}
+    .wrap{max-width:1100px;margin:28px auto;padding:28px;}
+
+    /* header */
+    .hero{background:var(--panel);border-radius:20px;padding:36px;box-shadow:0 10px 30px rgba(50,50,80,0.06);display:flex;gap:28px;align-items:center;}
+    .hero-left{flex:1}
+    .logo-bubble{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:linear-gradient(90deg,#7dd3fc,#60a5fa);color:white;font-weight:600}
+    h1{font-size:44px;margin:12px 0 4px;color:#281c6a}
+    p.lead{color:var(--muted);margin:0 0 6px}
+
+    /* hero image preview */
+    .hero-right{width:380px;flex-shrink:0}
+    .hero-image{border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(30,30,80,0.06)}
+    .hero-image img{display:block;width:100%;height:100%;object-fit:cover}
+
+    /* links grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:22px}
+    .card{background:var(--panel);border-radius:14px;padding:16px;box-shadow:0 8px 20px rgba(40,40,90,0.04);display:flex;flex-direction:column;gap:12px;min-height:120px}
+    .card .title{font-weight:700;color:#222}
+    .card .desc{color:var(--muted);font-size:13px}
+    .card .btn{margin-top:auto;display:inline-block;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:600;border:0;background:linear-gradient(90deg,#ff7a7a,#ffb86b);color:white}
+
+    /* footer */
+    .footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* small screens */
+    @media (max-width:720px){
+      h1{font-size:28px}
+      .hero{flex-direction:column}
+      .hero-right{width:100%}
+    }
+
+    /* tiny helpers */
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#f3f4ff;color:#2b2b6b;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-left">
+        <div class="logo-bubble">My Link Hub</div>
+        <h1>All my websites — one place</h1>
+        <p class="lead">Click any card to open the site. Replace the links in the <code>links</code> array in the script to customize.</p>
+        <div class="pill" style="margin-top:14px">Quick access • Clean UI</div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-image">
+          <!-- The UI image you uploaded is referenced below. If you move it, update the path. -->
+          <img src="/mnt/data/Quick-Guide-to-GUI-Design-scaled.jpg" alt="UI preview">
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid" id="linksGrid">
+        <!-- Cards will be injected here by JavaScript -->
+      </section>
+    </main>
+
+    <div class="footer">Tip: edit the <code>links</code> array in the JavaScript at the bottom of this file to add, remove or reorder your links.</div>
+  </div>
+
+  <script>
+    /********************************************************
+     * Replace the items inside the `links` array below with
+     * your own link objects. You can paste full URLs into
+     * the "url" field. The site will render them automatically.
+     *
+     * Example item:
+     * { title: 'My Blog', url: 'https://example.com', desc: 'My thoughts and projects' }
+     ********************************************************/
+
+    const links = [
+      { title: 'Website 1', url: 'https://example.com', desc: 'Primary website' },
+      { title: 'Portfolio', url: 'https://ivy0165487.github.io/MyPersonalSkills/', desc: 'Designs, projects and case studies' },
+      { title: 'Shop', url: 'https://example.shop', desc: 'Buy merch and digital goods' }
+    ];
+
+    // If your images are local, point to the path. If you want to hide the image, remove the hero-image element above.
+
+    function createCard(item){
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = item.url || '#';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = item.title || 'Untitled';
+
+      const desc = document.createElement('div');
+      desc.className = 'desc';
+      desc.textContent = item.desc || '';
+
+      const btn = document.createElement('div');
+      btn.className = 'btn';
+      btn.textContent = 'Open';
+
+      a.appendChild(title);
+      if(desc.textContent) a.appendChild(desc);
+      a.appendChild(btn);
+
+      return a;
+    }
+
+    const grid = document.getElementById('linksGrid');
+    if(links.length === 0){
+      const note = document.createElement('p');
+      note.textContent = 'No links found — add entries to the links array in the file.';
+      note.style.color = '#6b7280';
+      grid.appendChild(note);
+    } else {
+      links.forEach(l=> grid.appendChild(createCard(l)));
+    }
+  </script>
+</body>
+</html>
